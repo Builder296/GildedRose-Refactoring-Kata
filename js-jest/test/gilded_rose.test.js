@@ -24,7 +24,7 @@ describe("Gilded Rose", function () {
   });
 
   it("should reduce 2 quality when sell by date has passed", function () {
-    const food = new Shop([new Item("food", 1, 10),]);
+    const food = new Shop([new Item("food", 1, 10)]);
     const items = food.updateQuality();
     expect(items[0].name).toBe("food");
     expect(items[0].sellIn).toBe(0);
@@ -36,7 +36,7 @@ describe("Gilded Rose", function () {
   });
 
   it("The Quality of an item is never negative", function () {
-    const food = new Shop([new Item("food", 1, 1),]);
+    const food = new Shop([new Item("food", 1, 1)]);
     const items = food.updateQuality();
     expect(items[0].name).toBe("food");
     expect(items[0].sellIn).toBe(0);
@@ -45,5 +45,21 @@ describe("Gilded Rose", function () {
     expect(items[0].name).toBe("food");
     expect(items[0].sellIn).toBe(-1);
     expect(items[0].quality).toBe(0);
+  });
+
+  it("Aged Brie actually increases in Quality the older it gets", function () {
+    const agedBrie = new Shop([new Item("Aged Brie", 2, 1)]);
+    const items = agedBrie.updateQuality();
+    expect(items[0].name).toBe("Aged Brie");
+    expect(items[0].sellIn).toBe(1);
+    expect(items[0].quality).toBe(2);
+    agedBrie.updateQuality();
+    expect(items[0].name).toBe("Aged Brie");
+    expect(items[0].sellIn).toBe(0);
+    expect(items[0].quality).toBe(3);
+    agedBrie.updateQuality();
+    expect(items[0].name).toBe("Aged Brie");
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[0].quality).toBe(4);
   });
 });
