@@ -22,4 +22,16 @@ describe("Gilded Rose", function () {
     expect(items[0].sellIn).toBe(0);
     expect(items[0].quality).toBe(0);
   });
+
+  it("should reduce 2 quality when sell by date has passed", function () {
+    const food = new Shop([new Item("food", 1, 10),]);
+    const items = food.updateQuality();
+    expect(items[0].name).toBe("food");
+    expect(items[0].sellIn).toBe(0);
+    expect(items[0].quality).toBe(9);
+    food.updateQuality();
+    expect(items[0].name).toBe("food");
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[0].quality).toBe(7);
+  });
 });
